@@ -13,8 +13,8 @@ use App\Models\Like;
 use App\Models\Follower;
 
 
-class Controller extends BaseController
-{
+class Controller extends BaseController{
+
     public function __construct(){
         $this->middleware('auth:api');
     }
@@ -29,7 +29,7 @@ class Controller extends BaseController
     }
 
     public function searchUsers(Request $request){
-        $query = $request->input('name');
+        $query = $request->name;
         $users = User::where('name', 'like', "%$query%")->get();
 
         return response()->json([
@@ -50,7 +50,7 @@ class Controller extends BaseController
 
     public function addFollower(Request $request){
         $user = Auth::user();
-        $followingId = $request->input('following_id');
+        $followingId = $request->following_id;
 
         $isFollowing = Follower::where('follower_id', $user->id)
             ->where('following_id', $followingId)
@@ -81,10 +81,9 @@ class Controller extends BaseController
         ]);
     }
 
-
     public function addLike(Request $request){
         $user = Auth::user();
-        $postId = $request->input('post_id');
+        $postId = $request->post_id;
 
         $hasLiked = Like::where('user_id', $user->id)->where('post_id', $postId)->exists();
 
@@ -118,12 +117,29 @@ class Controller extends BaseController
 
         $post = new Post();
         $post->user_id = $user->id;
-        $post->image_url = $request->input('image_url');
+        $post->image_url = $request->image_url;
         $post->save();
 
         return response()->json([
             'status' => 'Success',
             'message' => 'Post added.',
+        ]);
+    }
+
+    public function getPostLikes(Request $request){
+
+        $request->validate([
+            'post_id' => 'required|numeric|exists:posts,id',
+        ]);
+    
+        $postId = $request->post_id;
+    
+        $likedUserIds = Like::where('post_id', $postId)->pluck('user_id');
+        $likedUsers = User::whereIn('id', $likedUserIds)->pluck('name');
+    
+        return response()->json([
+            'status' => 'success',
+            'liked_users' => $likedUsers,
         ]);
     }
 
