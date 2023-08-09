@@ -48,6 +48,39 @@ class Controller extends BaseController
         ]);
     }
 
+    public function addFollower(Request $request){
+        $user = Auth::user();
+        $followingId = $request->input('following_id');
+
+        $isFollowing = Follower::where('follower_id', $user->id)
+            ->where('following_id', $followingId)
+            ->exists();
+
+        if ($isFollowing) {
+            return response()->json([
+                'status' => 'Error',
+                'message' => 'You are already following this user.',
+            ], 400);
+        }
+
+        if ($user->id === $followingId) {
+            return response()->json([
+                'status' => 'Error',
+                'message' => 'You cannot follow yourself.',
+            ], 400);
+        }
+
+        Follower::create([
+            'follower_id' => $user->id,
+            'following_id' => $followingId,
+        ]);
+
+        return response()->json([
+            'status' => 'Success',
+            'message' => 'You are now following the user.',
+        ]);
+    }
+
     
 
 }
