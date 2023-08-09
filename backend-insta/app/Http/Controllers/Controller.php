@@ -13,23 +13,14 @@ use App\Models\Like;
 use App\Models\Follower;
 
 
-class Controller extends BaseController
-{
+
+class Controller extends BaseController{
+
+
     public function __construct(){
         $this->middleware('auth:api');
     }
 
-    public function searchUsers(Request $request){
-        $query = $request->input('query');
-        $users = User::where('name', 'like', "%$query%")
-                     ->orWhere('username', 'like', "%$query%")
-                     ->get();
-
-        return response()->json([
-            'status' => 'Success',
-            'users' => $users,
-        ]);
-    }
 
     public function getPosts(Request $request){
         $posts = Post::all();
@@ -37,6 +28,17 @@ class Controller extends BaseController
         return response()->json([
             'status' => 'Success',
             'posts' => $posts,
+        ]);
+    }
+
+    public function searchUsers(Request $request){
+        $query = $request->name;
+        $users = User::where('name', 'like', "%$query%")->get();
+
+        return response()->json([
+            'status' => 'Success',
+            'users' => $users,
+
         ]);
     }
 
@@ -52,9 +54,8 @@ class Controller extends BaseController
 
     public function addFollower(Request $request){
         $user = Auth::user();
-        $followingId = $request->input('following_id');
+        $followingId = $request->following_id;
 
-        // Check if the user is already following this user using a Follower model
         $isFollowing = Follower::where('follower_id', $user->id)
             ->where('following_id', $followingId)
             ->exists();
@@ -66,7 +67,6 @@ class Controller extends BaseController
             ], 400);
         }
 
-        // Prevent self-following
         if ($user->id === $followingId) {
             return response()->json([
                 'status' => 'Error',
@@ -74,7 +74,6 @@ class Controller extends BaseController
             ], 400);
         }
 
-        // Add the following relationship using the Follower model
         Follower::create([
             'follower_id' => $user->id,
             'following_id' => $followingId,
@@ -88,29 +87,21 @@ class Controller extends BaseController
 
     public function addLike(Request $request){
         $user = Auth::user();
-        $postId = $request->input('post_id');
+        $postId = $request->post_id;
 
-        // Check if the user has already liked the post
-        $hasLiked = Like::where('user_id', $user->id)
-            ->where('post_id', $postId)
-            ->exists();
+        $hasLiked = Like::where('user_id', $user->id)->where('post_id', $postId)->exists();
 
         if ($hasLiked) {
-            // Remove the like
-            Like::where('user_id', $user->id)
-                ->where('post_id', $postId)
-                ->delete();
 
+            Like::where('user_id', $user->id)->where('post_id', $postId)->delete();
             $post = Post::find($postId);
             $post->decrement('likes');
-
             return response()->json([
                 'status' => 'Success',
                 'message' => 'Post unliked.',
             ]);
         }
 
-        // Like the post
         $like = new Like();
         $like->user_id = $user->id;
         $like->post_id = $postId;
@@ -130,7 +121,7 @@ class Controller extends BaseController
 
         $post = new Post();
         $post->user_id = $user->id;
-        $post->image_url = $request->input('image_url');
+        $post->image_url = $request->image_url;
         $post->save();
 
         return response()->json([
@@ -138,5 +129,23 @@ class Controller extends BaseController
             'message' => 'Post added.',
         ]);
     }
+
+    public function getPostLikes(Request $request){
+
+        $request->validate([
+            'post_id' => 'required|numeric|exists:posts,id',
+        ]);
+    
+        $postId = $request->post_id;
+    
+        $likedUserIds = Like::where('post_id', $postId)->pluck('user_id');
+        $likedUsers = User::whereIn('id', $likedUserIds)->pluck('name');
+    
+        return response()->json([
+            'status' => 'success',
+            'liked_users' => $likedUsers,
+        ]);
+    }
+
     
 }

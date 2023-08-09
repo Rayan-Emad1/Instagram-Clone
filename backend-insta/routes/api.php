@@ -12,11 +12,14 @@ Route::post('/signup', [AuthController::class, 'signUp']);
 
 
 Route::group(["middleware" => "auth:api"], function(){
-    $user = Auth::user(); 
     Route::get('/users/search', [Controller::class, 'searchUsers']);
     Route::get('/posts', [Controller::class, 'getPosts']);
+
     Route::get('/posts/personal', [Controller::class, 'getPersonalPosts']);
+    Route::post('/addpost', [Controller::class, 'addPost']);
     Route::post('/follow', [Controller::class, 'addFollower']);
+    
     Route::post('/like', [Controller::class, 'addLike']);
-    Route::post('/posts', [Controller::class, 'addPost']);
+    Route::post('/post/likes', [Controller::class, 'getPostLikes']);
+
 });
