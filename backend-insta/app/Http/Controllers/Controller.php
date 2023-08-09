@@ -13,11 +13,14 @@ use App\Models\Like;
 use App\Models\Follower;
 
 
+
 class Controller extends BaseController{
+
 
     public function __construct(){
         $this->middleware('auth:api');
     }
+
 
     public function getPosts(Request $request){
         $posts = Post::all();
@@ -35,6 +38,7 @@ class Controller extends BaseController{
         return response()->json([
             'status' => 'Success',
             'users' => $users,
+
         ]);
     }
 
@@ -143,4 +147,5 @@ class Controller extends BaseController{
         ]);
     }
 
+    
 }

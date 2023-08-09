@@ -12,7 +12,6 @@ Route::post('/signup', [AuthController::class, 'signUp']);
 
 
 Route::group(["middleware" => "auth:api"], function(){
-    
     Route::get('/users/search', [Controller::class, 'searchUsers']);
     Route::get('/posts', [Controller::class, 'getPosts']);
 
