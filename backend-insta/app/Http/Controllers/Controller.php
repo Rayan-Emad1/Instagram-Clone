@@ -38,7 +38,15 @@ class Controller extends BaseController
         ]);
     }
 
- 
+    public function getPersonalPosts(Request $request){
+        $user = Auth::user();
+        $personalPosts = Post::where('user_id', $user->id)->get();
+
+        return response()->json([
+            'status' => 'Success',
+            'posts' => $personalPosts,
+        ]);
+    }
 
     
 
