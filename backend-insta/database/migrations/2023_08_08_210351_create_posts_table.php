@@ -17,8 +17,6 @@ return new class extends Migration
             $table->string('image_url');
             $table->unsignedInteger('likes')->default(0);
             $table->timestamps();
-    
-            $table->foreign('user_id')->references('id')->on('users');
         });
 
         Schema::create('followers', function (Blueprint $table) {
@@ -26,9 +24,6 @@ return new class extends Migration
             $table->unsignedBigInteger('follower_id'); 
             $table->unsignedBigInteger('following_id'); 
             $table->timestamps();
-    
-            $table->foreign('follower_id')->references('id')->on('users');
-            $table->foreign('following_id')->references('id')->on('users');
         });
 
         Schema::create('likes', function (Blueprint $table) {
@@ -36,9 +31,6 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('post_id');
             $table->timestamps();
-    
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('post_id')->references('id')->on('posts');
         });
     
     }
