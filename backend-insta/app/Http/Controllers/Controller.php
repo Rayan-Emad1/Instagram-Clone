@@ -113,6 +113,18 @@ class Controller extends BaseController
         ]);
     }
 
-    
+    public function addPost(Request $request){
+        $user = Auth::user();
+
+        $post = new Post();
+        $post->user_id = $user->id;
+        $post->image_url = $request->input('image_url');
+        $post->save();
+
+        return response()->json([
+            'status' => 'Success',
+            'message' => 'Post added.',
+        ]);
+    }
 
 }
