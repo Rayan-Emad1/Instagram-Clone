@@ -28,4 +28,18 @@ class Controller extends BaseController
         ]);
     }
 
+    public function searchUsers(Request $request){
+        $query = $request->input('name');
+        $users = User::where('name', 'like', "%$query%")->get();
+
+        return response()->json([
+            'status' => 'Success',
+            'users' => $users,
+        ]);
+    }
+
+ 
+
+    
+
 }
