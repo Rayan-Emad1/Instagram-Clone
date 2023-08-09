@@ -81,6 +81,38 @@ class Controller extends BaseController
         ]);
     }
 
+
+    public function addLike(Request $request){
+        $user = Auth::user();
+        $postId = $request->input('post_id');
+
+        $hasLiked = Like::where('user_id', $user->id)->where('post_id', $postId)->exists();
+
+        if ($hasLiked) {
+
+            Like::where('user_id', $user->id)->where('post_id', $postId)->delete();
+            $post = Post::find($postId);
+            $post->decrement('likes');
+            return response()->json([
+                'status' => 'Success',
+                'message' => 'Post unliked.',
+            ]);
+        }
+
+        $like = new Like();
+        $like->user_id = $user->id;
+        $like->post_id = $postId;
+        $like->save();
+
+        $post = Post::find($postId);
+        $post->increment('likes');
+
+        return response()->json([
+            'status' => 'Success',
+            'message' => 'Post liked.',
+        ]);
+    }
+
     
 
 }
