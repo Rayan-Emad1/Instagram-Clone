@@ -30,9 +30,17 @@ button {
     cursor: pointer;
 }
 
+button:nth-child(2){
+    color: #1a73e8;
+    background-color: white;
+    border: 4px solid white;
+}
+
 .input-container {
     display: flex;
     flex-direction: column;
+    justify-content: start;
+    align-items: flex-start;
     width: 90%;
 }
 
@@ -40,4 +48,8 @@ input {
     height: 40px;
     width: 100%;
     align-self: flex-start;
+}
+
+h1 {
+    font-family: Helvetica, Arial, and San Serif;
 }
