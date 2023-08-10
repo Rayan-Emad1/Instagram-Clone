@@ -10,7 +10,28 @@ const Header = () => {
   const navigate = useNavigate();
 
   const handleSearch = async () => {
-    //
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.log('Token not found.');
+        return;
+      }
+  
+      const response = await fetch('http://127.0.0.1:8000/api/users/search', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ name: searchQuery }),
+      });
+  
+      const data = await response.json();
+      setSearchResults(data.users);
+      setShowModal(true);
+    } catch (error) {
+      console.log('Error:', error);
+    }
   };
   
   const closeSearchModal = () => {
