@@ -44,16 +44,11 @@ class AuthController extends Controller
         $user->save();
 
         $token = Auth::login($user);
-        $user->token = $token;
+        // $user->token = $token;
 
         return response()->json([
-            'status' => 'success',
             'message' => 'User created successfully',
-            'user' => $user,
-            // 'authorisation' => [
-            //     'token' => $token,
-            //     'type' => 'bearer',
-            // ]
+            'token' => $token,
         ]);
     }
 
@@ -87,8 +82,8 @@ class AuthController extends Controller
         $user->token = $token;
     
         return response()->json([
-            'status' => 'success',
-            'user' => $user,
+            'message' => 'User signin successfully',
+            'token' => $token,
         ]);
     }
 
