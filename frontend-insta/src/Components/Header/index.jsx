@@ -8,10 +8,10 @@ const Header = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
+  const token = localStorage.getItem('token');
 
   const handleSearch = async () => {
-    try {
-      const token = localStorage.getItem('token');
+    try {    
       if (!token) {
         console.log('Token not found.');
         return;
@@ -39,8 +39,6 @@ const Header = () => {
     setSearchResults([]);
   };
 
-  const followUser = async (userId) => {
-  };
 
   const OpenProfile = () => {
     navigate('/profile')
@@ -61,7 +59,7 @@ const Header = () => {
         <img onClick={OpenProfile} className="profile-image" src="https://w7.pngwing.com/pngs/128/223/png-transparent-user-person-profile-instagram-ui-colored-icon.png" />
       </div>
 
-      {showModal && (<SearchModal searchResults={searchResults} closeModal={closeSearchModal} followUser={followUser} />)}
+      {showModal && (<SearchModal searchResults={searchResults} closeModal={closeSearchModal}  />)}
     </header>
   );
 };

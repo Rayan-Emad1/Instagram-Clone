@@ -1,7 +1,7 @@
 import React from 'react';
 import UserCard from '../UserCard';
 
-const SearchModal = ({ searchResults, closeModal, followUser }) => { 
+const SearchModal = ({ searchResults, closeModal }) => { 
   return (
     <div className="search-modal">
       <div className="modal-content">
@@ -10,7 +10,7 @@ const SearchModal = ({ searchResults, closeModal, followUser }) => {
         </button>
         <div className="search-results">
           {searchResults.map(user => (
-            <UserCard key={user.id} user={user} followUser={followUser} /> 
+            <UserCard key={user.id} user={user} /> 
           ))}
         </div>
       </div>
