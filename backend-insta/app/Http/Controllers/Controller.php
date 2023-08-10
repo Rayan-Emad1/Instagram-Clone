@@ -185,6 +185,7 @@ class Controller extends BaseController{
         return response()->json([
             'status' => 'Success',
             'total_likes' => $totalLikes,
+            'user_name' => $user->name,
         ]);
     }
     
