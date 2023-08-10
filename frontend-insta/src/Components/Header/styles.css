@@ -19,27 +19,7 @@
     color: #333;
   }
   
-  .search-bar {
-    display: flex;
-    align-items: center;
-  }
-  
-  .search-input {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-right: 10px;
-  }
-  
-  .search-button {
-    background-color: #333;
-    color: #fff;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
+
   .profile-image {
     width: 32px;
     height: 32px;

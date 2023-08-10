@@ -1,4 +1,5 @@
 import React from 'react';
+import './styles.css'
 
 
 
@@ -34,7 +35,7 @@ const UserCard = ({ user }) => {
   return (
     <div className="user-card">
       <span>{user.name}</span>
-      <button onClick={() => followUser(user.id)}>Follow</button>
+      <button className="follow-button" onClick={() => followUser(user.id)}>Follow</button>
     </div>
   );
 };
