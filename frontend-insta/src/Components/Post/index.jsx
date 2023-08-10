@@ -1,6 +1,11 @@
-import React from 'react';
 
-const Post = ({ post, likePost }) => {
+import React, { useState, useEffect } from 'react';
+
+const Post = ({ post, likePost}) => {
+
+  // const [condition,setCondition] =  useState("Like");
+  // const x =setCondition();
+  // //tried to reset name of button
   return (
     <div className="post-card">
       <img src={post.image_url} alt={`Post by ${post.user_name}`} />
