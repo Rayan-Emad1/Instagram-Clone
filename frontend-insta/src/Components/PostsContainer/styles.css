@@ -1,0 +1,9 @@
+.posts-container{
+    margin-top: 50px;
+    padding: 30px;
+    display: flex;
+    flex-wrap:wrap;
+    width: 100vw;
+    background-color: aqua;
+ 
+}
