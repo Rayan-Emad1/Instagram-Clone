@@ -8,7 +8,7 @@ const Main = () => {
   return (
     <div className="main-container">
       <Header />
-      <PostContainer />
+      <PostContainer url = {'/posts'} />
     </div>
   );
 };
