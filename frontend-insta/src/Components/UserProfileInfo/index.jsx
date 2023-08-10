@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import './styles.css'
 
 const UserProfileInfo = () => {
+  const [name, setName] = useState('');
   const [totalLikes, setTotalLikes] = useState(0);
   const [totalFollowers, setTotalFollowers] = useState(0);
   const [newPostImageUrl, setNewPostImageUrl] = useState('');
@@ -31,6 +33,7 @@ const UserProfileInfo = () => {
       const likesData = await likesResponse.json();
       const followersData = await followersResponse.json();
 
+      setName(likesData.user_name);
       setTotalLikes(likesData.total_likes);
       setTotalFollowers(followersData.total_followers);
 
@@ -58,6 +61,7 @@ const UserProfileInfo = () => {
 
       const data = await response.json();
       console.log('Add post response:', data.massage);
+      setNewPostImageUrl("")
       fetchUserInfo()
       ;
     } catch (error) {
@@ -72,10 +76,12 @@ const UserProfileInfo = () => {
 
   return (
     <div className="user-profile-info">
-      <p>Total Likes: {totalLikes}</p>
-      <p>Total Followers: {totalFollowers}</p>
-      
-      <div >
+      <div className='user-status'>
+        <p>User Name: {name}</p>
+        <p>Total Likes: {totalLikes}</p>
+        <p>Total Followers: {totalFollowers}</p>
+      </div>
+      <div className='user-input'>
         <input type="text" placeholder="Image URL" value={newPostImageUrl} onChange={(e) => setNewPostImageUrl(e.target.value)} />
         <button onClick={handleAddPost}>Add Post</button>
       </div>
