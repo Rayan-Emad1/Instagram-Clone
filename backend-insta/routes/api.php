@@ -18,10 +18,12 @@ Route::group(["middleware" => "auth:api"], function(){
     Route::get('/posts/personal', [Controller::class, 'getPersonalPosts']);
     Route::post('/addpost', [Controller::class, 'addPost']);
     Route::post('/follow', [Controller::class, 'addFollower']);
+    Route::post('/unfollow', [Controller::class, 'unfollowUser']);
+
     Route::get('/user/likes', [Controller::class, 'getUserTotalLikes']);
     Route::get('/user/followers', [Controller::class, 'getUserTotalFollowers']);
     
     Route::post('/like', [Controller::class, 'addLike']);
-    Route::post('/post/likes', [Controller::class, 'getPostLikes']);
+    Route::post('/post/likes', [Controller::class, 'getPostLikes']); // wanted to get names of whom liked the photos
 
 });

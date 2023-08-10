@@ -198,5 +198,31 @@ class Controller extends BaseController{
         ]);
     }
 
+    public function unfollowUser(Request $request){
+        $user = Auth::user();
+        $followingId = $request->following_id;
+    
+        $isFollowing = Follower::where('follower_id', $user->id)
+            ->where('following_id', $followingId)
+            ->exists();
+    
+        if ($isFollowing) {
+            Follower::where('follower_id', $user->id)
+                ->where('following_id', $followingId)
+                ->delete();
+    
+            return response()->json([
+                'status' => 'Success',
+                'message' => 'You have unfollowed the user.',
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'Error',
+                'message' => 'You are not following this user.',
+            ], 400);
+        }
+    }
+    
+
     
 }
