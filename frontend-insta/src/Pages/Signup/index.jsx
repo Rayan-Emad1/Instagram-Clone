@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './styles.css'
 
 const SignUp = () => {
@@ -6,9 +7,19 @@ const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [checkpassword, setCheckPassword] = useState('');
+  const navigate = useNavigate();
+
+  const handlePasswordMatch = () => {
+    return password === checkpassword;
+  };
 
   const handleSignUp = async () => {
     try {
+
+      if (!handlePasswordMatch()) {
+        console.log('Passwords do not match');
+        return;
+      }
       const response = await fetch('http://127.0.0.1:8000/api/signup', {
         method: 'POST',
         headers: {
@@ -22,7 +33,7 @@ const SignUp = () => {
       if (data.message === 'User created successfully') {
         console.log('Token:', data.token);
         localStorage.setItem("token" , data.token)
-        // redirectToMainPage();
+        navigate('/main'); 
 
       } else {
         console.log('Signup failed:', data.message);

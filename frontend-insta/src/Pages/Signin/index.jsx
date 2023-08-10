@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import './styles.css'
- 
+import { useNavigate } from 'react-router-dom';
+import './signin.css';
+
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
  
   const handleSignIn = async () => {
     try {
+
       const response = await fetch('http://127.0.0.1:8000/api/signin', {
         method: 'POST',
         headers: {
@@ -22,9 +25,11 @@ const SignIn = () => {
       const data = await response.json();
   
       if (data.message === 'User signin successfully') {
+
         console.log('Token:', data.token);
         localStorage.setItem('token', data.token);
-        // redirectToMainPage();
+        navigate('/main'); 
+
       } else {
         console.log('Signin failed:', data.message);
       }
@@ -34,13 +39,13 @@ const SignIn = () => {
   };
 
   const handleSignUp = () => {
-    return 
+     navigate('/signup');  
   }
 
   return (
     <div className='center'>
       <div className='signin-form'>
-        <h1>Sign In</h1>
+        <h1><i>Instagram</i></h1>
         <div className='input-container '>
           <label>Email:</label>
           <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
@@ -50,8 +55,11 @@ const SignIn = () => {
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>
         <div className='button-container'>
-          <button className='submit' onClick={handleSignUp}>Sign Up</button>
           <button className='submit' onClick={handleSignIn}>Sign In</button>
+        </div>
+        <div className='button-container'>
+          <p>Don't have an account?</p>
+          <button className='submit' onClick={handleSignUp}>Sign Up</button>
         </div>
       </div>
     </div>
