@@ -16,15 +16,19 @@ const Header = () => {
 
   const OpenProfile = () => {
     navigate('/profile')
-
   }
+  
+  const goHome = () => {
+    navigate('/main')
+  }
+  
 
   return (
     <header className="header-container">
 
       <div className="header-content">
 
-        <div className="logo">Instagram</div>
+        <div className="logo" onClick={goHome}>Instagram</div>
         <Searchbar setSearchResults={setSearchResults} setShowModal={setShowModal} />
         <img onClick={OpenProfile} className="profile-image" src="https://w7.pngwing.com/pngs/128/223/png-transparent-user-person-profile-instagram-ui-colored-icon.png" />
 
