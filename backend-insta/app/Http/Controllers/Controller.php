@@ -100,7 +100,7 @@ class Controller extends BaseController{
         ]);
     }
 
-    public function addLike(Request $request){
+    public function toggleLike(Request $request){
         $user = Auth::user();
         $postId = $request->post_id;
 

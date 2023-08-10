@@ -62,7 +62,7 @@ const PostContainer = ({ url }) => {
     <div className="content">
       <div className="posts-container">
         {posts.map(post => (
-          <Post key={post.id} post={post} likePost={likePost} />
+          <Post key={post.id} post={post} likePost={likePost} getPosts={getPosts} />
         ))}
       </div>
     </div>
