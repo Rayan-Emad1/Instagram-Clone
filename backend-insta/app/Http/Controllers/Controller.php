@@ -175,7 +175,13 @@ class Controller extends BaseController{
 
     public function getUserTotalLikes() {
         $user = Auth::user();
-        $totalLikes = Like::where('user_id', $user->id)->count();
+        $userPosts = Post::where('user_id', $user->id)->get();
+    
+        $totalLikes = 0;
+        foreach ($userPosts as $post) {
+            $totalLikes += $post->likes;
+        }
+    
         return response()->json([
             'status' => 'Success',
             'total_likes' => $totalLikes,
@@ -184,7 +190,7 @@ class Controller extends BaseController{
     
     public function getUserTotalFollowers() {
         $user = Auth::user();
-        $totalFollowers = Follower::where('following_id', $user->id)->count();
+        $totalFollowers = Follower::where('follower_id', $user->id)->count();
         return response()->json([
             'status' => 'Success',
             'total_followers' => $totalFollowers,
