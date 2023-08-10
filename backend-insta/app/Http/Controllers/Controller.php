@@ -36,6 +36,7 @@ class Controller extends BaseController{
                 'id' => $post->id,
                 'image_url' => $post->image_url,
                 'user_name' => $user->name,
+                'likes' => $post->likes,
             ];
         }
 
