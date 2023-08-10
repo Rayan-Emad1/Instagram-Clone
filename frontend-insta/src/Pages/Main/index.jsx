@@ -1,27 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../../Components/Header';
-import Post from '../../Components/Post';
+import PostContainer from '../../Components/PostsContainer'
+import './styles.css'
 
 const Main = () => {
 
-  const [posts, setPosts] = useState([]);
 
-  const likePost = async (postId) => {
-  };
 
   return (
     <div className="main-container">
-
       <Header />
-
-      <div className="content">
-        <div className="posts-container">
-          {posts.map(post => (
-            <Post key={post.id} post={post} likePost={likePost} />
-          ))}
-          
-        </div>
-      </div>
+      <PostContainer />
     </div>
   );
 };
