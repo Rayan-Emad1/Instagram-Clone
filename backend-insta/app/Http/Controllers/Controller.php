@@ -173,5 +173,23 @@ class Controller extends BaseController{
         ]);
     }
 
+    public function getUserTotalLikes() {
+        $user = Auth::user();
+        $totalLikes = Like::where('user_id', $user->id)->count();
+        return response()->json([
+            'status' => 'Success',
+            'total_likes' => $totalLikes,
+        ]);
+    }
+    
+    public function getUserTotalFollowers() {
+        $user = Auth::user();
+        $totalFollowers = Follower::where('following_id', $user->id)->count();
+        return response()->json([
+            'status' => 'Success',
+            'total_followers' => $totalFollowers,
+        ]);
+    }
+
     
 }

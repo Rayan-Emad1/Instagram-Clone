@@ -18,6 +18,8 @@ Route::group(["middleware" => "auth:api"], function(){
     Route::get('/posts/personal', [Controller::class, 'getPersonalPosts']);
     Route::post('/addpost', [Controller::class, 'addPost']);
     Route::post('/follow', [Controller::class, 'addFollower']);
+    Route::get('/user/likes', [Controller::class, 'getUserTotalLikes']);
+    Route::get('/user/followers', [Controller::class, 'getUserTotalFollowers']);
     
     Route::post('/like', [Controller::class, 'addLike']);
     Route::post('/post/likes', [Controller::class, 'getPostLikes']);
